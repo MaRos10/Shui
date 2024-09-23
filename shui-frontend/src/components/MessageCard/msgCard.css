@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+.msgCardWrapper {
+  background-color: white;
+  padding: 1rem;
+  font-family: "PT Sans", sans-serif;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+.date {
+  color: #00000099;
+  font-size: 0.8rem;
+}
+
+.msgBody {
+  padding: 1rem 0rem;
+  font-size: 0.9rem;
+}
+
+.author {
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.iconsWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.editButton,
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}

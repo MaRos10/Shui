@@ -1,0 +1,79 @@
+org: fu2023
+service: shui-backend
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-north-1
+  deploymentMethod: direct
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "*"
+  httpApi:
+    cors: true
+
+build:
+  esbuild:
+    minify: true
+
+package:
+  individually: true
+
+functions:
+  createMessage:
+    handler: functions/createMessage/index.handler
+    events:
+      - httpApi:
+          path: /message
+          method: post
+
+  deleteMessage:
+    handler: functions/deleteMessage/index.handler
+    events:
+      - httpApi:
+          path: /message/{id}
+          method: delete
+
+  getMessages:
+    handler: functions/getMessages/index.handler
+    events:
+      - httpApi:
+          path: /messages
+          method: get
+
+  getUserMessage:
+    handler: functions/getUserMessage/index.handler
+    events:
+      - httpApi:
+          path: /messages/{username}
+          method: get
+
+  updateMessage:
+    handler: functions/updateMessage/index.handler
+    events:
+      - httpApi:
+          path: /message/{id}
+          method: put
+
+resources:
+  Resources:
+    messagesDb:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: messages
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST

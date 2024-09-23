@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+.writeMsgWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #19274a;
+}
+
+.writeMsg {
+  background-color: #fff;
+  width: 100%;
+  max-width: 600px; /* Maximal bredd för större skärmar */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 6rem;
+  text-align: left;
+  flex-grow: 1;
+  margin-top: 5rem;
+}
+
+.writeMsgInput {
+  text-align: left;
+  border: none;
+}
+
+.userName,
+.postMessage {
+  width: 100%;
+  max-width: 600px;
+}
+
+.userName {
+  padding: 8rem 0rem 3rem 0rem;
+}
+
+.userNameInput {
+  width: 100%;
+  font-size: 1rem;
+  padding: 1.1rem;
+  background-color: transparent;
+  font-family: "PT Sans", sans-serif;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+}
+
+.postMessage {
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: #ef4343;
+  color: black;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+}
+
+/* Media queries för desktop */
+@media (min-width: 768px) {
+  .writeMsgWrapper {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 40px;
+  }
+
+  .writeMsg {
+    width: 80vw;
+    max-width: 800px;
+  }
+
+  .userName,
+  .postMessage {
+    width: 80vw;
+    max-width: 800px;
+  }
+
+  .usernNameInput,
+  .postMessage {
+    font-size: 1.2rem;
+  }
+
+  .postMessage {
+    padding: 1.2rem;
+    font-size: 1.2rem;
+  }
+}
