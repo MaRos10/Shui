@@ -14,15 +14,23 @@
   width: 100%;
   max-width: 600px; /* Maximal bredd för större skärmar */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 6rem;
-  text-align: left;
   flex-grow: 1;
   margin-top: 5rem;
+  border-radius: 5px;
 }
 
 .writeMsgInput {
+  height: 100%;
+  width: calc(100% + 2rem);
+  margin-left: -1rem; /* Negativ marginal för att flytta mot vänster */
+  margin-right: -1rem; /* Negativ marginal för att flytta mot höger */
   text-align: left;
-  border: none;
+  padding: 0.75rem;
+  text-align: left;
+  outline: none;
+  font-family: "PT Sans", sans-serif;
+  font-size: 0.95rem;
+  resize: vertical; /* Gör att användaren kan justera höjden - kontroll */
 }
 
 .userName,
@@ -43,6 +51,7 @@
   font-family: "PT Sans", sans-serif;
   border: 1px solid #ffffff;
   border-radius: 5px;
+  color: white;
 }
 
 .postMessage {
@@ -54,6 +63,20 @@
   cursor: pointer;
   border-radius: 5px;
   margin-bottom: 2rem;
+}
+
+.backButtonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.backButton {
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+  color: #e4cececa;
+  cursor: pointer;
 }
 
 /* Media queries för desktop */
