@@ -11,7 +11,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Flow />} />
           <Route path="/writemsg" element={<WriteMsg />} />
-          <Route path="/updatemsg" element={<UpdateMsg />} />
+          <Route path="/updatemsg/:id" element={<UpdateMsg />} />
         </Routes>
       </Router>
     </div>
