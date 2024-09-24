@@ -64,6 +64,13 @@ functions:
           path: /message/{id}
           method: put
 
+  getMessage:
+    handler: functions/getMessage/index.handler
+    events:
+      - httpApi:
+          path: /message/{id}
+          method: get
+
 resources:
   Resources:
     messagesDb:
