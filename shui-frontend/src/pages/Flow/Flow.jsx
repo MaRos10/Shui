@@ -12,36 +12,6 @@ export default function Flow() {
   const [currentPage, setCurrentPage] = useState(1);
   const messagesPerPage = 4;
 
-  // Pagination
-  const totalPages = Math.ceil(messages.length / messagesPerPage);
-  const currentMessages = messages
-    .filter((message) =>
-      message.username.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .sort((a, b) =>
-      filterByDate
-        ? new Date(a.createdAt) - new Date(b.createdAt)
-        : new Date(b.createdAt) - new Date(a.createdAt)
-    )
-    .slice((currentPage - 1) * messagesPerPage, currentPage * messagesPerPage);
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  // Hantera search och filtrering
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleFilterChange = () => {
-    setFilterByDate(!filterByDate);
-  };
-
   // Funktion för att hämta alla meddelanden
   const fetchMessages = async () => {
     try {
@@ -101,24 +71,62 @@ export default function Flow() {
     }
   };
 
+  // Hantera search och filtrering
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFilterChange = () => {
+    setFilterByDate(!filterByDate);
+  };
+
+  // Pagination
+  const totalPages = Math.ceil(messages.length / messagesPerPage);
+  const currentMessages = messages
+    .sort((a, b) =>
+      filterByDate
+        ? new Date(a.createdAt) - new Date(b.createdAt)
+        : new Date(b.createdAt) - new Date(a.createdAt)
+    )
+    .slice((currentPage - 1) * messagesPerPage, currentPage * messagesPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
   useEffect(() => {
     fetchMessages();
   }, []);
 
   return (
-    <section>
+    <section className="flowWrapper">
       <div className="searchWrapper">
         <input
           type="text"
-          placeholder="Sök efter användarnamn..."
+          placeholder="Sök användarnamn"
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        <button onClick={handleFilterChange}>
+        <button onClick={handleFilterChange} className="filterButton">
           {filterByDate ? "Nyast först" : "Äldst först"}
         </button>
       </div>
-      <MsgCard messages={currentMessages} onDelete={deleteMessage} />
+      <div className="messagesContainer">
+        {currentMessages.length === 0 ? (
+          <div className="noMessages">
+            <p>
+              Inga meddelanden <br />
+              att visa
+            </p>
+          </div>
+        ) : (
+          <MsgCard messages={currentMessages} onDelete={deleteMessage} />
+        )}
+      </div>
       <div className="pagination">
         <button onClick={handlePreviousPage} disabled={currentPage === 1}>
           Föregående
@@ -127,9 +135,11 @@ export default function Flow() {
           Nästa
         </button>
       </div>
-      <button className="createButton" onClick={() => navigate(`/writemsg/`)}>
-        <img src={create} alt="Create" className="createIcon" />
-      </button>
+      <div className="createBtnWrapper">
+        <button className="createButton" onClick={() => navigate(`/writemsg/`)}>
+          <img src={create} alt="Create" className="createIcon" />
+        </button>
+      </div>
     </section>
   );
 }
