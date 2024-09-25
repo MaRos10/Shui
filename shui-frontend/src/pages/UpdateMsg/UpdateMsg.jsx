@@ -1,4 +1,4 @@
-import "./updateMsg.css";
+import "../WriteMsg/WriteMsg.css";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
