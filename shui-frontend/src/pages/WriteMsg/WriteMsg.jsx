@@ -34,7 +34,10 @@ export default function WriteMsg() {
         // Om API-svaret är OK, navigera till start-url
         navigate("/");
       } else {
-        alert("Något gick fel vid publiceringen av meddelandet");
+        const errorData = await response.json();
+        alert(
+          errorData.message || "Något gick fel vid publiceringen av meddelandet"
+        );
       }
     } catch (error) {
       console.error("Fel vid publicering:", error);
