@@ -18,9 +18,9 @@ exports.handler = async (event) => {
     // Hämta meddelanden från DynamoDB
     const result = await db.scan(params);
 
-    // Filtrera meddelanden baserat på användarnamn
-    const userMessages = result.Items.filter(
-      (message) => message.username === username
+    // Filtrera meddelanden baserat på prefix
+    const userMessages = result.Items.filter((message) =>
+      message.username.startsWith(username)
     );
 
     // Kontrollera om några meddelanden hittades
