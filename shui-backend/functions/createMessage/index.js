@@ -6,13 +6,13 @@ exports.handler = async (event) => {
   try {
     const body = JSON.parse(event.body);
 
-    // Validering av inkommande data
     const { username, text } = body;
+
     if (!username || !text) {
-      return sendError(
-        400,
-        "Användarnamn och text är obligatoriskt att fylla i"
-      );
+      return sendError(400, "Användarnamn och text är obligatoriskt");
+    }
+    if (/\s/.test(username)) {
+      return sendError(400, "Användarnamn får inte innehålla mellanrum");
     }
 
     // Skapa ett nytt meddelande
@@ -25,7 +25,7 @@ exports.handler = async (event) => {
       }),
     };
 
-    // Sätter upp DynamoDB-parametrar för att spara meddelandet
+    // DB-parametrar för att spara meddelandet
     const params = {
       TableName: "messages",
       Item: newMessage,
@@ -34,10 +34,9 @@ exports.handler = async (event) => {
     // Spara meddelandet i DynamoDB
     await db.put(params);
 
-    // Returnera ett lyckat svar
+    // Returnera svar beroende på utfall
     return sendResponse(newMessage);
   } catch (error) {
-    console.error("Fel vid hämtning av meddelanden:", error);
     return sendError(500, "Fel uppstod vid skapande av meddelandet");
   }
 };
