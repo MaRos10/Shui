@@ -4,16 +4,17 @@
 
 - POST https://your-aws-link-here/message
 
+Kräver username och text i body. Användarnamn får inte innehålla något mellanrum
+
+ <i> Body </i>
 ```
-body:
 { 
  "username": "JohnDoe", 
  "text": "Mitt första inlägg"
 }
 ```
-
+ <i> Response </i>
 ```
-response:
 {
 	"data": {
 		"id": "2U5UuIXOrLV9P7tWaKxPG",
@@ -28,8 +29,8 @@ response:
 
 - GET https://your-aws-link-here/messages
 
+ <i> Response </i>
 ```
-response:
 {
 	"data": [
 		{
@@ -52,8 +53,11 @@ response:
 
 - GET https://your-aws-link-here/messages/{username}
 
+Kräver att användarnamn finns och skickas som pathParam.
+Meddelanden filtreras för att hämta de som matchar användarnamnet. Delmatchningar av användarnamnet är tillåtna, så du behöver inte skriva in hela namnet för att få ett resultat.
+
+ <i> Response </i>
 ```
-response:
 {
 	"data": [
 		{
@@ -70,8 +74,10 @@ response:
 
 - GET https://your-aws-link-here/messages/{id}
 
+Kräver att id finns och skickas som pathParam 
+
+ <i> Response </i>
 ```
-response:
 {
 	"data": [
 		{
@@ -88,15 +94,17 @@ response:
 
 - PUT https://your-aws-link-here/message/{id}
 
+Kräver att id finns och skickas som pathParam samt att text skickas med i bodyn
+
+ <i> Body </i>
 ```
-body:
 { 
 	"text": "Mitt första inlägg - uppdaterat" 
 }
 ```
 
+ <i> Response </i>
 ```
-response:
 {
 	"data": {
 		"text": "Mitt första inlägg - uppdaterat"
@@ -108,8 +116,10 @@ response:
 
 - DELETE https://your-aws-link-here/message/{id}
 
+Kräver att id finns och skickas som pathParam
+
+ <i> Response </i>
 ```
-response:
 {
 	"data": {
 		"message": "Meddelandet är borttaget"
