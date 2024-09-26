@@ -7,13 +7,20 @@
   font-family: "Fira Sans", sans-serif;
 }
 
+:root {
+  --primary-color: #19274a;
+  --secondary-color: #ef4343;
+  --date-author-color: rgba(33, 16, 129, 0.8);
+  --border-radius: 5px;
+}
+
 html,
 body,
 #root,
 .App {
   height: 100%;
   width: 100%;
-  background-color: #19274a;
+  background-color: var(--primary-color);
 }
 
 .App {
@@ -21,11 +28,4 @@ body,
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-/* Mediaqueries */
-@media (min-width: 768px) {
-  .App {
-    height: 100vh;
-  }
 }
