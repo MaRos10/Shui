@@ -4,33 +4,27 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function UpdateMsg() {
   const navigate = useNavigate();
-  const { id } = useParams(); // För att hämta id från URL:en
+  const { id } = useParams();
   const [username, setUsername] = useState("");
   const [text, setText] = useState("");
 
+  // Hämta det befintliga meddelandet baserat på id
   useEffect(() => {
-    // Hämta det befintliga meddelandet baserat på id
     fetch(
       `https://aaj6tqrveh.execute-api.eu-north-1.amazonaws.com/message/${id}`
     )
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
         return response.json();
       })
       .then((data) => {
-        // Hämta användarnamn och text från data.data
-        setUsername(data.data.username); // Fyll i användarnamnet
-        setText(data.data.text); // Fyll i den nuvarande texten
-      })
-      .catch((error) => {
-        console.error("Error fetching message:", error);
+        // Hämta användarnamn och text och fyll i
+        setUsername(data.data.username);
+        setText(data.data.text);
       });
   }, [id]);
 
+  // Uppdatera meddelandet med det nya innehållet
   const handleUpdate = () => {
-    // Skicka PUT-förfrågan till backend
     fetch(
       `https://aaj6tqrveh.execute-api.eu-north-1.amazonaws.com/message/${id}`,
       {
@@ -42,27 +36,24 @@ export default function UpdateMsg() {
       }
     )
       .then((response) => response.json())
+      // Skicka tillbaka användaren till startsidan när uppdateringen är klar
       .then(() => {
-        // Skicka tillbaka användaren till startsidan när uppdateringen är klar
         navigate("/");
-      })
-      .catch((error) => {
-        console.error("Error updating message:", error);
       });
   };
 
   return (
-    <section className="writeMsgWrapper">
+    <section className="msgFormWrapper">
       <div className="backButtonContainer">
         <button className="backButton" onClick={() => navigate("/")}>
           ←
         </button>
       </div>
-      <article className="writeMsg">
+      <article className="msgForm">
         <textarea
           type="text"
-          id="writeMsg"
-          className="writeMsgInput"
+          id="msgForm"
+          className="msgFormInput"
           placeholder="Ändra ditt meddelande"
           value={text}
           onChange={(e) => setText(e.target.value)}

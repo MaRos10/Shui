@@ -9,10 +9,11 @@ export default function Flow() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterByDate, setFilterByDate] = useState(false);
   const [messages, setMessages] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const messagesPerPage = 4;
 
-  // Funktion för att hämta alla meddelanden
+  // Hämta alla meddelanden
   const fetchMessages = async () => {
     try {
       const response = await fetch(
@@ -25,7 +26,7 @@ export default function Flow() {
     }
   };
 
-  // Funktion för att hämta meddelanden baserat på användarnamn
+  // Hämta meddelanden baserat på användarnamn
   const fetchMessagesByUsername = async (username) => {
     try {
       const response = await fetch(
@@ -38,16 +39,16 @@ export default function Flow() {
     }
   };
 
-  // Hämta data baserat på sökterm eller alla meddelanden
+  // Hämta meddelanden baserat på sökterm eller alla meddelanden om sökterm ej finns
   useEffect(() => {
     if (searchTerm) {
       fetchMessagesByUsername(searchTerm);
     } else {
-      fetchMessages(); // Hämta alla meddelanden om ingen sökterm finns
+      fetchMessages();
     }
   }, [searchTerm]); // Uppdatera vid ändring av sökterm
 
-  // Funktion för att ta bort meddelande
+  // Ta bort meddelande
   const deleteMessage = (id) => {
     if (window.confirm("Är du säker på att du vill ta bort meddelandet?")) {
       fetch(
@@ -55,23 +56,17 @@ export default function Flow() {
         {
           method: "DELETE",
         }
-      )
-        .then((response) => {
-          if (response.ok) {
-            setMessages((prevMessages) =>
-              prevMessages.filter((message) => message.id !== id)
-            );
-          } else {
-            console.error("Failed to delete message:", response.status);
-          }
-        })
-        .catch((error) => {
-          console.error("Error deleting message:", error);
-        });
+      ).then((response) => {
+        if (response.ok) {
+          setMessages((prevMessages) =>
+            prevMessages.filter((message) => message.id !== id)
+          );
+        }
+      });
     }
   };
 
-  // Hantera search och filtrering
+  // Uppdatera sökterm och växla datumfilter
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -104,7 +99,7 @@ export default function Flow() {
 
   return (
     <section className="flowWrapper">
-      <div className="searchWrapper">
+      <section className="searchWrapper">
         <input
           type="text"
           placeholder="Sök användarnamn"
@@ -114,27 +109,27 @@ export default function Flow() {
         <button onClick={handleFilterChange} className="filterButton">
           {filterByDate ? "Nyast först" : "Äldst först"}
         </button>
-      </div>
-      <div className="messagesContainer">
+      </section>
+      <article className="messagesContainer">
         {currentMessages.length === 0 ? (
-          <div className="noMessages">
+          <section className="noMessages">
             <p>
               Inga meddelanden <br />
               att visa
             </p>
-          </div>
+          </section>
         ) : (
           <MsgCard messages={currentMessages} onDelete={deleteMessage} />
         )}
-      </div>
-      <div className="pagination">
+      </article>
+      <nav className="pagination">
         <button onClick={handlePreviousPage} disabled={currentPage === 1}>
           Föregående
         </button>
         <button onClick={handleNextPage} disabled={currentPage === totalPages}>
           Nästa
         </button>
-      </div>
+      </nav>
       <div className="createBtnWrapper">
         <button className="createButton" onClick={() => navigate(`/writemsg/`)}>
           <img src={create} alt="Create" className="createIcon" />

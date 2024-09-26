@@ -8,17 +8,15 @@ export default function WriteMsg() {
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    // Validera att användarnamn och text finns
     if (!username || !text) {
       alert("Användarnamn och text är obligatoriskt!");
       return;
     }
 
-    // Skapa meddelande-objekt
     const newMessage = { username, text };
 
+    // Skapa nytt meddelande
     try {
-      // Skicka POST-begäran till API:t
       const response = await fetch(
         "https://aaj6tqrveh.execute-api.eu-north-1.amazonaws.com/message",
         {
@@ -31,7 +29,6 @@ export default function WriteMsg() {
       );
 
       if (response.ok) {
-        // Om API-svaret är OK, navigera till start-url
         navigate("/");
       } else {
         const errorData = await response.json();
@@ -40,22 +37,22 @@ export default function WriteMsg() {
         );
       }
     } catch (error) {
-      console.error("Fel vid publicering:", error);
+      alert("Fel vid publicering, försök igen");
     }
   };
 
   return (
-    <section className="writeMsgWrapper">
+    <section className="msgFormWrapper">
       <div className="backButtonContainer">
         <button className="backButton" onClick={() => navigate("/")}>
           ←
         </button>
       </div>
-      <article className="writeMsg">
+      <article className="msgForm">
         <textarea
           type="text"
-          id="writeMsg"
-          className="writeMsgInput"
+          id="msgForm"
+          className="msgFormInput"
           placeholder="Skriv ditt meddelande"
           value={text}
           onChange={(e) => setText(e.target.value)}

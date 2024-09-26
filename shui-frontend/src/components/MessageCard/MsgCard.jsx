@@ -7,9 +7,9 @@ export default function MsgCard({ messages, onDelete }) {
   const navigate = useNavigate();
 
   return (
-    <div className="msgContainer">
+    <section className="msgContainer">
       {messages.map((message) => (
-        <section className="msgCardWrapper" key={message.id}>
+        <article className="msgCardWrapper" key={message.id}>
           <div className="iconsWrapper">
             <button
               className="editButton"
@@ -24,13 +24,13 @@ export default function MsgCard({ messages, onDelete }) {
               <img src={deleteLogo} alt="Delete" className="icon" />
             </button>
           </div>
-          <div className="date">
+          <time className="date">
             {new Date(message.createdAt).toLocaleString()}
-          </div>
+          </time>
           <article className="msgBody">{message.text}</article>
           <article className="author">{message.username}</article>
-        </section>
+        </article>
       ))}
-    </div>
+    </section>
   );
 }
