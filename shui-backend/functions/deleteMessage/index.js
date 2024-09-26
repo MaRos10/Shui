@@ -6,7 +6,7 @@ exports.handler = async (event) => {
     const { id } = event.pathParameters;
 
     if (!id) {
-      return sendError(400, "Vänligen ange ID för meddelandet");
+      return sendError(400, "Meddelande ID krävs");
     }
 
     // DB-parametrar för att hämta meddelandet
