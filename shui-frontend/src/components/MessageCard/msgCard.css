@@ -1,27 +1,30 @@
-@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-
 .msgCardWrapper {
   background-color: white;
   padding: 1rem;
-  font-family: "PT Sans", sans-serif;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   margin-bottom: 1rem;
   width: 21rem;
 }
 
 .date {
-  color: #00000099;
-  font-size: 0.8rem;
+  color: var(--date-author-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
 }
 
 .msgBody {
   padding: 1rem 0rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 300;
 }
 
 .author {
+  color: var(--date-author-color);
   font-style: italic;
   font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.08rem;
 }
 
 .iconsWrapper {
