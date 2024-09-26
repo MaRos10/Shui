@@ -8,7 +8,6 @@ exports.handler = async () => {
     });
     return sendResponse(Items);
   } catch (error) {
-    console.error("Fel vid hämtning av meddelanden:", error);
     return sendError(500, "Kunde ej hämta meddelanden");
   }
 };
