@@ -5,36 +5,32 @@ exports.handler = async (event) => {
   try {
     const { username } = event.pathParameters;
 
-    // Kontrollera att username finns med i requesten
     if (!username) {
       return sendError(400, "Användarnamn krävs");
     }
 
-    // Sätter upp DynamoDB-parametrar för att hämta alla meddelanden
+    // DB-parametrar för att hämta alla meddelanden
     const params = {
       TableName: "messages",
     };
 
-    // Hämta meddelanden från DynamoDB
+    // Hämta meddelanden
     const result = await db.scan(params);
 
-    // Filtrera meddelanden baserat på prefix
+    // Filtrera meddelanden
     const userMessages = result.Items.filter((message) =>
-      message.username.startsWith(username)
+      message.username.toLowerCase().includes(username.toLowerCase())
     );
 
-    // Kontrollera om några meddelanden hittades
+    // Returnera svar beroende på utfall
     if (userMessages.length === 0) {
       return sendError(
         404,
         "Inga meddelanden hittades för det angivna användarnamnet"
       );
     }
-
-    // Returnera de hittade meddelandena
     return sendResponse(userMessages);
   } catch (error) {
-    console.error("Fel vid hämtning av meddelanden:", error);
     return sendError(500, "Ett fel uppstod vid hämtning av meddelanden");
   }
 };
